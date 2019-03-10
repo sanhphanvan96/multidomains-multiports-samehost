@@ -29,22 +29,16 @@ server {
    listen      80;
    server_name domain1.com;
    location / {
-      proxy_set_header   X-Real-IP $remote_addr;
-      proxy_set_header   Host      $http_host;
       proxy_pass         http://server1:8080;
    }
-   root /var/www/domain1;
 }
 
 server {
    listen       80;
    server_name domain2.com;
    location / {
-      proxy_set_header   X-Real-IP $remote_addr;
-      proxy_set_header   Host      $http_host;
       proxy_pass         http://server2:8081;
    }
-   root /var/www/domain2;
 }
 ```
 
