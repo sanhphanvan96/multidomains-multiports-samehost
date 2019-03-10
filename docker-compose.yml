@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  nginx:
+    build: "./nginx"
+    container_name: ng-multidomains
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - "./nginx/conf.d:/etc/nginx/conf.d"
+      - "./nginx/log:/var/log/nginx"
+    depends_on:
+      - server1
+      - server2
+  server1:
+    build: ./php
+    container_name: server1
+    environment:
+      server1: "SERVER 1"
+    volumes:
+      - "./php/index.php:/var/www/public/index.php"
+    command: ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/public"]
+  server2:
+    build: ./php
+    container_name: server2
+    environment:
+      server1: "SERVER 2"
+    volumes:
+      - "./php/index.php:/var/www/public/index.php"
+    command: ["php", "-S", "0.0.0.0:8081", "-t", "/var/www/public"]
